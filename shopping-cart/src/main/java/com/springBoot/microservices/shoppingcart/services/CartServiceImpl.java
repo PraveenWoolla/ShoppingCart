@@ -26,6 +26,9 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public List<Cart> getAllCarts(int ct_id) {
 		List<Cart> carts=cart.findByCtid(ct_id);
+		if(carts==null) {
+			throw new NullPointerException();
+		}
 		return carts;
 	}
 	
