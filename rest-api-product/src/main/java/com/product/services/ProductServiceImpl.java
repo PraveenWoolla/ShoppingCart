@@ -26,6 +26,9 @@ public class ProductServiceImpl implements ProductService{
 	public List<Product> getProducts()
 	{
         List<Product> products = this.productRepository.loadAll();
+        if(products==null) {
+			throw new NullPointerException();
+		}
         System.out.println(products);
 		return products;
 	}
@@ -38,27 +41,42 @@ public class ProductServiceImpl implements ProductService{
 	public Product getProduct(int pid)
 	{
 	
-		Optional<Product> product = this.productRepository.findById(pid);
-		return product.get();
+		Product product = this.productRepository.findByPid(pid);
+		if(product==null) {
+			throw new NullPointerException();
+		}
+		return product;
 	}
 	@Override
 	public List<Product> getProductsByColor(String color) {
 		List<Product> products = this.productRepository.findByColor(color);
+		if(products==null) {
+			throw new NullPointerException();
+		}
 		return products;
 	}
 	@Override
 	public List<Product> getProductsByName(String name) {
 		List<Product> products = this.productRepository.findByName(name);
+		if(products==null) {
+			throw new NullPointerException();
+		}
 		return products;
 	}
 	@Override
 	public List<Product> getProductsByCategory(String category) {
 		List<Product> products = this.productRepository.findByCategory(category);
+		if(products==null) {
+			throw new NullPointerException();
+		}
 		return products;
 	}
 	@Override
 	public List<Product> getProductsByColorAndCategory(String color, String category) {
 		List<Product> products = this.productRepository.findByColorAndCategory(color, category);
+		if(products==null) {
+			throw new NullPointerException();
+		}
 		return products;
 	}
 
