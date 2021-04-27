@@ -25,6 +25,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<CustomerProfile> getCustomers() {
 		List<CustomerProfile> customers =CustomerRepository.getAllCustomers();
+		if(customers==null) {
+			throw new NullPointerException();
+		}
 		return customers;
 	}
 	
@@ -35,41 +38,21 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public CustomerProfile getCustomerById(Integer id) {
-		Optional<CustomerProfile> optional = null;
 		CustomerProfile customer = null;
-		try
-		{
-			optional = this.CustomerRepository.findById(id);
-			customer = optional.get();
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
+			customer= this.CustomerRepository.findByCpid(id);
+			if(customer==null) {
+				throw new NullPointerException();
+			}
 		return customer;
-	}
-
-	@Override
-	public CustomerProfile LoginCustomer(String email, String password) {
-		CustomerProfile cust=null;
-		CustomerLogin customerLogin1=customerLoginRepository.findByEmail(email);
-		String pass2=customerLogin1.getPassword();
-		if(pass2.equals(password))
-		{
-		    cust=customerLogin1.getCustomer();
-		}
-	return cust;
 	}
 	
     @Override
 	public CustomerLogin getCustomerByemail(String email) {
 		CustomerLogin customer=this.customerLoginRepository.findByEmail(email);
+		if(customer==null) {
+			throw new NullPointerException();
+		}
 		return customer;
 	}
 
-//	@Override
-//	public CustomerProfile getCustomerByUsername(String email) {
-//		CustomerProfile customer=customerLoginRepository.findByEmail(email);
-//		return customer;
-//	}
 }
